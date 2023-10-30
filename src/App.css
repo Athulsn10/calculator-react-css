@@ -34,21 +34,33 @@
 }
 
 form .display {
-  display: flex;
-  justify-content: flex-end;
+  
+   background-color: rgb(53, 52, 52);
+   border-radius: 9px;
 }
 
-form .display input {
+#display{
   text-align: right;
   flex: 1;
   font-size: 45px;
   box-shadow: none;
   color: white;
-  background-color: rgb(53, 52, 52);
-  height: 90px;
+  justify-content:end;
+  height: 40px;
+  width: 316px;
   padding-right: 6px;
 }
-
+#display-top{
+  text-align: right;
+  flex: 1;
+  font-size: 25px;
+  box-shadow: none;
+  color: white;
+  justify-content:end;
+  height: 40px;
+  width: 316px;
+  padding-right: 6px;
+}
 form input.equal {
   width: 145px;
 }

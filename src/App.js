@@ -1,84 +1,78 @@
-import React, { Component } from 'react';
-import './App.css'
+import React, { useState } from 'react';
+import './App.css';
 
-class Calculator extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      display: '',
-    };
-  }
+function App() {
+  const [display, setDisplay] = useState('');
+  const [displayTop, setDisplayTop] = useState('');
 
-  handleDisplayChange = (content) => {
-    this.setState((prevState) => ({
-      display: prevState.display + content,
-    }));
+  const handleDisplayChange = (content) => {
+    setDisplay((prevDisplay) => prevDisplay + content);
   };
 
-  handleAllClear = () => {
-    this.setState({ display: '' });
+  const handleOperatorClick = (content) => {
+    setDisplayTop((prevDisplay) =>prevDisplay+display+content);
+    setDisplay('');
   };
 
-  handleBackspace = () => {
-    this.setState((prevState) => ({
-      display: prevState.display.slice(0, -1),
-    }));
+  const handleAllClear = () => {
+    setDisplay('');
+    setDisplayTop('');
   };
 
-  handleCalculate = () => {
-    const { display } = this.state;
-    console.log('Expression to evaluate:', display);
+  const handleBackspace = () => {
+    setDisplay((prevDisplay) => prevDisplay.slice(0, -1));
+  };
+
+  const handleCalculate = () => {
     try {
-      const result = eval(display);
-      console.log('Result:', result);
-      this.setState({ display: result.toString() });
+      setDisplay(eval(displayTop+display));
+      setDisplayTop('');
     } catch (error) {
-      console.error('Evaluation error:', error);
+      alert("enter valid values")
     }
+    
   };
 
-  render() {
-    return (
-      <div className="container">
-        <div className="calculator">
-          <form>
-            <div className="display">
-              <input type="text" id="display" value={this.state.display} readOnly />
-            </div>
-            <div>
-              <input type="button" value="AC" onClick={() => this.handleAllClear()} className="operator" id='ac' />
-              <input id='btn' type="button" value="DEL" onClick={() => this.handleBackspace()} className="operator" />
-              <input id='btn' type="button" value="/" onClick={() => this.handleDisplayChange('/')} className="operator" />
-            </div>
-            <div>
-              <input id='btn' type="button" value="7" onClick={() => this.handleDisplayChange('7')} />
-              <input id='btn' type="button" value="8" onClick={() => this.handleDisplayChange('8')} />
-              <input id='btn' type="button" value="9" onClick={() => this.handleDisplayChange('9')} />
-              <input id='btn' type="button" value="×" onClick={() => this.handleDisplayChange('*')} className="operator" />
-            </div>
-            <div>
-              <input id='btn' type="button" value="4" onClick={() => this.handleDisplayChange('4')} />
-              <input id='btn' type="button" value="5" onClick={() => this.handleDisplayChange('5')} />
-              <input id='btn' type="button" value="6" onClick={() => this.handleDisplayChange('6')} />
-              <input id='btn' type="button" value="-" onClick={() => this.handleDisplayChange('-')} className="operator" />
-            </div>
-            <div>
-              <input id='btn' type="button" value="1" onClick={() => this.handleDisplayChange('1')} />
-              <input id='btn' type="button" value="2" onClick={() => this.handleDisplayChange('2')} />
-              <input id='btn' type="button" value="3" onClick={() => this.handleDisplayChange('3')} />
-              <input id='btn' type="button" value="+" onClick={() => this.handleDisplayChange('+')} className="operator" />
-            </div>
-            <div>
-              
-              <input id='btn' type="button" value="0" onClick={() => this.handleDisplayChange('0')} />
-              <input id='btn' type="button" value="." onClick={() => this.handleDisplayChange('.')} className="operator" />
-              <input id='eq' type="button" value="=" onClick={() => this.handleCalculate()} className="equal operator" />
-            </div>
-          </form>
-        </div>
+  return (
+    <div className="container">
+      <div className="calculator">
+        <form>
+          <div className="display">
+            <input type="text" id="display-top" value={displayTop} readOnly /><br/>
+            <input type="text" id="display" value={display} readOnly />
+          </div>
+          <div>
+            <input type="button" value="AC" onClick={() => handleAllClear()} className="operator" id='ac' />
+            <input id='btn' type="button" value="DEL" onClick={() => handleBackspace()} className="operator" />
+            <input id='btn' type="button" value="/" onClick={() => handleOperatorClick('/')} className="operator" />
+          </div>
+          <div>
+            <input id='btn' type="button" value="7" onClick={() => handleDisplayChange('7')} />
+            <input id='btn' type="button" value="8" onClick={() => handleDisplayChange('8')} />
+            <input id='btn' type="button" value="9" onClick={() => handleDisplayChange('9')} />
+            <input id='btn' type="button" value="×" onClick={() => handleOperatorClick('*')} className="operator" />
+          </div>
+          <div>
+            <input id='btn' type="button" value="4" onClick={() => handleDisplayChange('4')} />
+            <input id='btn' type="button" value="5" onClick={() => handleDisplayChange('5')} />
+            <input id='btn' type="button" value="6" onClick={() => handleDisplayChange('6')} />
+            <input id='btn' type="button" value="-" onClick={() => handleOperatorClick('-')} className="operator" />
+          </div>
+          <div>
+            <input id='btn' type="button" value="1" onClick={() => handleDisplayChange('1')} />
+            <input id='btn' type="button" value="2" onClick={() => handleDisplayChange('2')} />
+            <input id='btn' type="button" value="3" onClick={() => handleDisplayChange('3')} />
+            <input id='btn' type="button" value="+" onClick={() => handleOperatorClick('+')} className="operator" />
+          </div>
+          <div>
+            <input id='btn' type="button" value="0" onClick={() => handleDisplayChange('0')} />
+            <input id='btn' type="button" value="." onClick={() => handleDisplayChange('.')} className="operator" />
+            <input id='eq' type="button" value="=" onClick={() => handleCalculate()} className="equal operator" />
+          </div>
+        </form>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default Calculator;
+export default App;
